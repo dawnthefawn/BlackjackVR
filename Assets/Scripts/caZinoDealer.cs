@@ -42,26 +42,14 @@ namespace caZino
             shuffle = new Shuffle();
             dealerhand = new Hand();
             playerhand = new Hand();
+            playerhand.mat.gObj = GameObject.FindGameObjectWithTag("Playermat");
+            dealerhand.mat.gObj = GameObject.FindGameObjectWithTag("Dealermat");
             dealerhand.Init();
             playerhand.Init();
             deck = shuffle.Generatedeck(n); 
             index = deck.Length;
         }
 
-        //original code from old blackjack project.
-        //public void FirstTurn()
-        //{
-        //    dealerhand.Init();
-        //    playerhand.Init();
-        //    playerhand.AddCard(DealCard());
-        //    dealerhand.SecretCard(DealCard());
-        //    playerhand.AddCard(DealCard());
-        //    dealerhand.AddCard(DealCard());
-        //    CheckWin();
-        //
-        //    //input.blackjackTurn(this); <---- Remnant from console based blackjackgame, needs overhaul.
-        //
-        //}
 
 /// <summary>
 /// FirstTurn reshuffles the deck, clears all hands, and then deals
@@ -70,12 +58,15 @@ namespace caZino
 /// </summary>
         void FirstTurn()
         {
+
+            playerhand.mat.Newgame();
+            dealerhand.mat.Newgame();
             index = 0;
             deck = shuffle.shuffler(deck);
-            playerhand.AddCard(DealCard());
             dealerhand.SecretCard(DealCard());
-            playerhand.AddCard(DealCard());
+            playerhand.FirstCard(DealCard());
             dealerhand.AddCard(DealCard());
+            playerhand.AddCard(DealCard());
             CheckWin();
         }
 
