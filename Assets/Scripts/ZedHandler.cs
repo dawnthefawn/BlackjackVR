@@ -18,11 +18,11 @@ namespace caZino
         {
             foreach (GameObject part in this.gameObject.GetComponentsInChildren<GameObject>())
             {
-                zParts.Add(part);
-                if(part.tag=="head")
-                {
-                    zHead = part;
-                }
+              zParts.Add(part);
+              //if( part.tag=="head")
+              //{
+              //    zHead = part;
+              //}
             }
 
         }
