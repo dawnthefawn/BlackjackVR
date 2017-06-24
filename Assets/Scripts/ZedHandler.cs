@@ -1,39 +1,1 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace caZino
-{
-
-    public class ZedHandler : MonoBehaviour
-    {
-
-        public List<GameObject> zParts;
-        public GameObject zHead;
-        public GameObject walk;
-        public GameObject attack;
-        public GameObject fall;
-
-        private void Start()
-        {
-            foreach (GameObject part in this.gameObject.GetComponentsInChildren<GameObject>())
-            {
-              zParts.Add(part);
-              //if( part.tag=="head")
-              //{
-              //    zHead = part;
-              //}
-            }
-
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.tag == "bulllet" && collision.collider == zHead.GetComponent<Collider>())
-            {
-                DestroyImmediate(zHead);
-
-            }
-        }
-    }
-}
+﻿using System.Collections; using System.Collections.Generic; using UnityEngine;  namespace caZino {      public class ZedHandler : MonoBehaviour     {          public List<GameObject> zParts;         public GameObject zHead;         public GameObject walk;         public GameObject attack;         public GameObject fall;         private bool active;         private bool hostile;           private void Start()         {             foreach (GameObject part in this.gameObject.GetComponentsInChildren<GameObject>())             {               zParts.Add(part);               //if( part.tag=="head")               //{               //    zHead = part;               //}             }             active = true;             hostile = false;             Instantiate(walk);          }           /// <summary>         /// If headshot, destroy the head and kill the zombie.         /// </summary>         /// <param name="collision"></param>         private void OnCollisionEnter(Collision collision)         {             if (collision.gameObject.tag == "Bulllet" && collision.collider == zHead.GetComponent<Collider>())             {                 DestroyImmediate(zHead);                 active = false;                 hostile = false;              }         }          void Update()         {          }     } }
