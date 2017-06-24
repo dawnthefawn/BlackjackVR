@@ -3,30 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace caZino
 {
     //Shuffle the deck of cards by setting the deck = to Shuffle.shuffler(deck being shuffled, number of decks in play.)
 
-    public class Shuffle
+    public class Shuffle : MonoBehaviour
     {
-        private static Random random = new Random();
+        private static System.Random random = new System.Random();
+        public GameObject FreshDeck;
 
-/// 
-/// shuffle to approximate true random
-/// based on the fisher-yates shuffle
-/// <param name="deck">pass the dealer's deck into the shuffler to return it. no need to generate a new deck each round.</param>
-/// <returns>a shuffled deck of cards</returns>
-/// 
+        private void Start()
+        {
+            FreshDeck = this.gameObject;
+        }
 
-        public Card[] shuffler(Card[] deck)
+        /// 
+        /// shuffle to approximate true random
+        /// based on the fisher-yates shuffle
+        /// <param name="deck">pass the dealer's deck into the shuffler to return it. no need to generate a new deck each round.</param>
+        /// <returns>a shuffled deck of cards</returns>
+        /// 
+
+        public GameObject[] shuffler(GameObject[] deck)
         {
             int n = deck.Length;
 
             for (int i = 0; i < n; i++)
             {
                 int index = random.Next(i, n);
-                Card card = deck[index];
+                GameObject card = deck[index];
                 deck[index] = deck[i];
                 deck[i] = card;
 
@@ -44,32 +51,30 @@ namespace caZino
 /// the user chooses a new set of decks
 /// 
 
-        public Card[] Generatedeck(int numdecks)
+        public GameObject[] Generatedeck(int numdecks)
         {
             int index = 0;
             if (numdecks < 1) { numdecks = 1; }
-            var deck = new Card[52 * numdecks];
-
-            for (int n = 1; n <= numdecks; n++)
+            var deck = new GameObject[52 * numdecks];
+            for (int i = 1; i <= numdecks; i++)
             {
-                foreach (string suit in new[] { "Spades", "Diamonds", "Clubs", "Hearts" })
+
+
+                foreach (Card card in this.gameObject.GetComponentsInChildren<Card>())
                 {
-                    for (int rank = 1; rank < 14; rank++)
-                    {
-                        Card c = new Card();
-                        c.Init(rank, suit);
-                        //c.value = c.setValue();
-                        //c.tag = c.setTag();
-                        //c.face = c.Face();
-                        deck[index] = c;
-                        index++;
-                    }
+                    deck[index] = card.gameObject;
+                    index++;
+                    Debug.LogError(card.gameObject.name);
                 }
             }
-
-
             return deck;
-
         }
+                
+            
+
+
+          
+
+        
     }
 }

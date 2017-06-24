@@ -8,6 +8,7 @@ namespace caZino
     public class BlackjackTable : MonoBehaviour
     {
         //A few variables to help track the game
+       
         public Shuffle shuffle;
         public Hand dealerhand;
         public Hand playerhand;
@@ -16,14 +17,21 @@ namespace caZino
         public int Wins;
         public int Losses;
         public int lostby;
+        public GameObject ZDealer;
+        public GameObject FreshDeck;
 
-        private Card[] deck;
+        private GameObject[] deck;
         private int index;
+        private GameObject DealerInstance;
+
 
 
         private void Start()
         {
-            
+            index = 0;
+            DealerInstance = Instantiate(ZDealer) as GameObject;
+            DealerInstance.SetActive(true);
+            BeginGame(1);
         }
 
 ///
@@ -40,15 +48,15 @@ namespace caZino
         void BeginGame(int n)
         {
             activegame = true;
-            shuffle = new Shuffle();
+            shuffle = FreshDeck.GetComponent<Shuffle>();
             dealerhand = new Hand();
             playerhand = new Hand();
-            //playerhand.mat.gObj = GameObject.FindGameObjectWithTag("Playermat");
-            //dealerhand.mat.gObj = GameObject.FindGameObjectWithTag("Dealermat");
+            playerhand.mat = GameObject.FindGameObjectWithTag("Playermat").GetComponent<Mathandler>();
+            dealerhand.mat = GameObject.FindGameObjectWithTag("Dealermat").GetComponent<Mathandler>();
             dealerhand.Init();
             playerhand.Init();
             deck = shuffle.Generatedeck(n); 
-            index = deck.Length;
+            FirstTurn();
         }
 
 
@@ -62,8 +70,11 @@ namespace caZino
 
             playerhand.mat.Newgame();
             dealerhand.mat.Newgame();
-            index = 0;
+            Debug.Log(deck.Length);
             deck = shuffle.shuffler(deck);
+            Debug.Log(deck.Length);
+            Debug.Log(deck[0].name);
+            index = deck.Length - 1;
             dealerhand.SecretCard(DealCard());
             playerhand.FirstCard(DealCard());
             dealerhand.AddCard(DealCard());
@@ -91,8 +102,6 @@ namespace caZino
                     dealerhand.stay = true;
                 }
 
-                //render.blackjack(dealerhand, playerhand); <---- Remnant from console based blackjackgame, needs overhaul.
-                //render will be replaced by mathandler
                 CheckWin();
         }
 
@@ -103,7 +112,7 @@ namespace caZino
 /// </summary>
 /// <returns>The next card off the top of the deck</returns>
 
-        public Card DealCard()
+        public GameObject DealCard()
         {
             if (index >= 0)
             {
@@ -127,6 +136,9 @@ namespace caZino
                 activegame = false;
                 win = "BUST";
                 Losses++;
+                lostby = playerhand.value - 21;
+                DealerInstance.GetComponent<ZDealer>().hitpoints = lostby;
+                DealerInstance.GetComponent<ZDealer>().hostile = true;
             }
 
 //if you dont bust and the dealer does, you win
