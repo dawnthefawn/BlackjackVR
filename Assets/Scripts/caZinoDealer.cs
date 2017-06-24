@@ -42,8 +42,8 @@ namespace caZino
             shuffle = new Shuffle();
             dealerhand = new Hand();
             playerhand = new Hand();
-            playerhand.mat.gObj = GameObject.FindGameObjectWithTag("Playermat");
-            dealerhand.mat.gObj = GameObject.FindGameObjectWithTag("Dealermat");
+            //playerhand.mat.gObj = GameObject.FindGameObjectWithTag("Playermat");
+            //dealerhand.mat.gObj = GameObject.FindGameObjectWithTag("Dealermat");
             dealerhand.Init();
             playerhand.Init();
             deck = shuffle.Generatedeck(n); 

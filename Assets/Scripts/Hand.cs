@@ -13,21 +13,22 @@ namespace caZino
         public bool stay;
         public Card secretcard;
         public int secretvalue;
-        public MatHandler mat;
+        public Mathandler mat;
 
         public void Init()
         {
             stay = false;
             value = 0;
             hand = new List<Card>();
-            mat = new MatHandler();
+            mat = new Mathandler();
         }
 
         public void FirstCard(Card c)
         {
-            mat.FirstCard(c);
             AddCard(c);
+            mat.FirstCard(c);
         }
+
         public void AddCard(Card c)
         {
             hand.Add(c);
@@ -39,7 +40,9 @@ namespace caZino
         public void SecretCard(Card c)
         {
             secretcard = c;
-            FirstCard(c);
+            hand.Add(c);
+            secretvalue += c.value;
+            mat.SecretCard(c);
         }
 
 
