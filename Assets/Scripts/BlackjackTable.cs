@@ -77,8 +77,10 @@ namespace caZino
             index = deck.Length - 1;
             dealerhand.SecretCard(DealCard());
             playerhand.FirstCard(DealCard());
+            // ** this function will be replaced by a call to ZedHandler to deal cards out to zombies
             dealerhand.AddCard(DealCard());
             playerhand.AddCard(DealCard());
+            // ** Same Here
             CheckWin();
         }
 

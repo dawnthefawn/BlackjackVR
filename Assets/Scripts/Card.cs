@@ -36,7 +36,7 @@ namespace caZino
                     {
                     index = i;
                     rank += array[i];
-                    break;
+
                 }
             }
             return rank;

@@ -62,11 +62,12 @@ namespace caZino
 
                 foreach (Card card in this.gameObject.GetComponentsInChildren<Card>())
                 {
-                    deck[index] = card.gameObject;
+                    deck[index] = Instantiate(card.gameObject);
+                    Debug.LogError(deck[index].name);
                     index++;
-                    Debug.LogError(card.gameObject.name);
+
                 }
-            }
+            }   
             return deck;
         }
                 
